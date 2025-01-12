@@ -69,6 +69,8 @@ body {
 
 #button-container {
     text-align: center;
+    display: flex;
+    gap:1%
 }
 
 button {
@@ -77,4 +79,43 @@ button {
     padding: 1%;
     margin: 1%;
     border-radius: 7px;
+    min-width: 70px;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+button.selected{
+    background-color: lightblue;
+    color: white;
+    font-size: bold;
+    border: 2px solid #007bff
+}
+
+.gameBar{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap:20%
+}
+
+.searchBar{
+    display: flex;
+    height: 40px;
+}
+
+.searchInput{
+    font-family: 'Cabin';
+    padding: 1%;
+    margin: 1%;
+    border-radius: 7px;
+    border: none;
+    width: auto;
+}
+
+.game-not-found p{
+    color: white;
+    font-size: large;
+    font-weight: bold;
 }
