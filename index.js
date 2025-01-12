@@ -103,6 +103,13 @@ gamesCard.innerHTML = `${gamesSum.toLocaleString()}`
 function filterUnfundedOnly() {
     deleteChildElements(gamesContainer);
 
+    const buttons = document.querySelectorAll('#button-container button')
+
+    buttons.forEach((btn) => btn.classList.remove("selected"))
+
+    const allGamesButton = document.querySelector('#unfunded-btn')
+    allGamesButton.classList.add('selected')
+
     // use filter() to get a list of games that have not yet met their goal
     let unfunded = GAMES_JSON.filter((games) => {
         return games.pledged < games.goal
@@ -114,6 +121,13 @@ function filterUnfundedOnly() {
 // show only games that are fully funded
 function filterFundedOnly() {
     deleteChildElements(gamesContainer);
+
+    const buttons = document.querySelectorAll('#button-container button')
+
+    buttons.forEach((btn) => btn.classList.remove("selected"))
+
+    const allGamesButton = document.querySelector('#funded-btn')
+    allGamesButton.classList.add('selected')
 
     // use filter() to get a list of games that have met or exceeded their goal
     let funded = GAMES_JSON.filter((games) => {
@@ -128,6 +142,12 @@ function filterFundedOnly() {
 function showAllGames() {
     deleteChildElements(gamesContainer);
 
+    const buttons = document.querySelectorAll('#button-container button')
+    
+    buttons.forEach((btn) => btn.classList.remove("selected"))
+
+    const allGamesButton = document.querySelector('#all-btn')
+    allGamesButton.classList.add('selected')
     // add all games from the JSON data to the DOM
     addGamesToPage(GAMES_JSON)
 
@@ -182,5 +202,35 @@ const sortedGames =  GAMES_JSON.sort( (item1, item2) => {
 const [first, second, ...others] = sortedGames
 // create a new element to hold the name of the top pledge game, then append it to the correct element
 firstGameContainer.append(first.name)
-secondGameContainer.append(second.name)
 // do the same for the runner up item
+secondGameContainer.append(second.name)
+
+
+document.getElementById("search").addEventListener("click", () => {
+    const searchInput = document.querySelector(".searchInput").value;
+    searchGamesByName(searchInput)
+})
+function searchGamesByName(searchTerm){
+    
+    if(searchTerm.length !== 0){
+        const buttons = document.querySelectorAll('#button-container button')
+        buttons.forEach((btn) => btn.classList.remove("selected"))
+
+        const lowerCaseSearchTerm = searchTerm.toLowerCase();
+
+        const filteredGames = GAMES_JSON.filter((game) => game.name.toLowerCase().includes(lowerCaseSearchTerm));
+        deleteChildElements(gamesContainer);
+
+        if(filteredGames.length === 0){
+            const noGamesFound = document.createElement('div')
+            noGamesFound.classList.add("game-not-found")
+            noGamesFound.innerHTML = `
+                <p> No Games Found for "${searchTerm}" :(</p>
+            `
+            gamesContainer.appendChild(noGamesFound)
+        } else {
+            addGamesToPage(filteredGames)
+        }
+    }
+}
+
