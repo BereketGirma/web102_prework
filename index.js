@@ -184,8 +184,10 @@ const displayStr = `
     We need your help to fund these amazing games!
 `
 
+const description = document.createElement('p')
+description.innerHTML = displayStr
 // create a new DOM element containing the template string and append it to the description container
-descriptionContainer.innerHTML = `<p>${displayStr}</p>`
+descriptionContainer.appendChild(description)
 /************************************************************************************
  * Challenge 7: Select & display the top 2 games
  * Skills used: spread operator, destructuring, template literals, sort 
